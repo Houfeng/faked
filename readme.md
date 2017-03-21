@@ -15,7 +15,7 @@ $ npm i faked --save-dev
 
 ## 使用方法
 
-when 方法，通过 when 方法你几乎就可以使用 faked 的所有功能，尽管 faked 还提供了一些简便的别名方法。
+`faked.when` 方法，通过 `faked.when` 方法你几乎就可以使用 faked 的所有功能，尽管 faked 还提供了一些简便的别名方法。
 ```js
 //Usage
 //1. faked.when(<method>,<pattern>,<handler>,[options])
@@ -28,29 +28,29 @@ faked.when('get','/user/{id}',function(){
 
 ```
 每一个 handler 的 this 就是当前请求上下文对象，对象有如下成员:
-- this.send(data, status, headers) 方法，用于响应一个请求，status 默认为 200
-- this.params 路由参数对象，用于访问路由模式中的「具名参数」，如上边示你中的 id
-- this.query 解析查询字符串对应的对象，比如 `?name=bob` 可以通过 `this.params.name` 访问
-- this.body 请求的主体内容，通常会是一个 json 对象，它取决于发起的请求。
+- `this.send(data, status, headers)` 方法，用于响应一个请求，status 默认为 200
+- `this.params` 路由参数对象，用于访问路由模式中的「具名参数」，如上边示你中的 id
+- `this.query` 解析查询字符串对应的对象，比如 `?name=bob` 可以通过 `this.params.name` 访问
+- `this.body` 请求的主体内容，通常会是一个 `json` 对象，它取决于发起的请求。
 
 其它方法，faked 还基于 when 方法提供了一组件便捷方法，包括
 `get,post,put,delete,options,patch ...` 等常用的 Http Methods
 
-用 get 写一个示例：
+用 `faked.get` 写一个示例：
 
 ```js
 faked.get('/user/{id}',function(){
   this.send({id:this.params.id,name:'Bob'});
 });
 ```
-其它方法和 get 用法一致。
+其它方法和 `faked.get` 用法一致。
 
 ## 小提示
 
 1. 请勿将 faked 放到「生产环境」的应用或页面中
 2. 开发过程中可用自动化的服本处理什么时候包含 faked 什么时候不包含 faked
 
-比如，在 webpak 中，可以根据环境变量决定入口文件，并只在 `mock` 的入口文件中引用 faked，示例:
+比如，在 `webpak` 中，可以根据环境变量决定入口文件，并只在 `mock` 的入口文件中引用 faked，示例:
 
 webpack.config.js
 ```js
@@ -71,13 +71,13 @@ module.exports = {
 };
 ```
 
-然后，index.mock.js 中这样写
+然后，`index.mock.js` 中这样写
 ```js
 require('./mock')
 require('./index');
 ```
 
-mock.js 用于存放你的 mock 代码
+`mock.js` 用于存放你的 mock 代码
 ```js
 const faked = require('faked');
 
