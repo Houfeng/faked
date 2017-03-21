@@ -1,6 +1,6 @@
 {
   "name": "faked",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Hello Faked",
   "main": "./src/index.js",
   "scripts": {
