@@ -47,8 +47,8 @@ faked.get('/user/{id}',function(){
 
 ## 小提示
 
-1. 请勿将 faked 放到「生产环境」的应用或页面中
-2. 开发过程中可用自动化的服本处理什么时候包含 faked 什么时候不包含 faked
+> 请勿将 faked 放到「生产环境」的应用或页面中  
+> 开发过程中可用自动化的服本处理什么时候包含 faked 什么时候不包含 faked
 
 比如，在 `webpak` 中，可以根据环境变量决定入口文件，并只在 `mock` 的入口文件中引用 faked，示例:
 
@@ -71,13 +71,13 @@ module.exports = {
 };
 ```
 
-然后，`index.mock.js` 中这样写
+然后，在 `index.mock.js` 中这样写
 ```js
 require('./mock')
 require('./index');
 ```
 
-`mock.js` 用于存放你的 mock 代码
+用于存放的 `mock` 代码 `mock.js` 是这样的
 ```js
 const faked = require('faked');
 
