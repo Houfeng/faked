@@ -1,7 +1,7 @@
-## 简介
+## 一、简介
 faked 是一个在前端开发中用于模拟服务端接口的模块。
 
-## 安装 faked
+## 二、安装 faked
 
 1. 通过 script 引入
 ```html
@@ -13,7 +13,7 @@ faked 是一个在前端开发中用于模拟服务端接口的模块。
 $ npm i faked --save-dev
 ```
 
-## 使用方法
+## 三、使用方法
 
 `faked.when` 方法，通过 `faked.when` 方法你几乎就可以使用 faked 的所有功能，尽管 faked 还提供了一些简便的别名方法。
 ```js
@@ -45,7 +45,7 @@ faked.get('/user/{id}',function(){
 ```
 其它方法和 `faked.get` 用法一致。
 
-## 小提示
+## 四、小提示
 
 > 请勿将 faked 放到「生产环境」的应用或页面中  
 > 开发过程中可用自动化的服本处理什么时候包含 faked 什么时候不包含 faked
