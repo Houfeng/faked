@@ -43,3 +43,44 @@ faked.get('/user/{id}',function(){
 });
 ```
 其它方法和 get 用法一致。
+
+### 小提示
+
+1. 请勿将 faked 放到「生产环境」的应用或页面中
+2. 开发过程中可用自动化的服本处理什么时候包含 faked 什么时候不包含 faked
+
+比如，在 webpak 中，可以根据环境变量决定入口文件，并只在 `mock` 的入口文件中引用 faked，示例:
+
+webpack.config.js
+```js
+module.exports = {
+  entry: {
+    //根据 NODE_ENV 决定是 index.js 还是 index.mock.js
+    bundle: `./src/index${NODE_ENV=='mock'?'.mock':''}.js`
+  },
+  output: {
+    path: './dist/',
+    filename: `./[name]${NODE_ENV == 'prod'?'.min':''}.js`
+  },
+  devtool: 'source-map',
+  module: {
+    loaders: [...]
+  },
+  plugins: [...]
+};
+```
+
+然后，index.mock.js 中这样写
+```js
+require('./mock')
+require('./index');
+```
+
+mock.js 用于存放你的 mock 代码
+```js
+const faked = require('faked');
+
+faked.get('/user/{id}',function(){
+  this.send({id:this.params.id,name:'Bob'});
+});
+```
