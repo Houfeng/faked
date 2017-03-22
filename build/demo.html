@@ -15,6 +15,9 @@
     faked.when(['get', 'post'], '/', function () {
       this.send(this.body || this.query);
     });
+    faked.get('http://xxx.com', {
+      jsonp: 'hello'
+    });
     console.log('原生:');
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/', true);

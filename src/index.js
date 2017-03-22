@@ -10,4 +10,9 @@ window.Response = require('./response');
 window.fetch = require('./fetch');
 window.XMLHttpRequest = require('./xhr');
 
-module.exports = window.faked = require('./faked');;
+const faked = require('./faked');
+const jsonp = require('./jsonp');
+
+faked.jsonp = jsonp;
+
+module.exports = window.faked = faked;

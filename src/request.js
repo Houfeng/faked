@@ -43,6 +43,16 @@ class Request extends Body {
     }
   }
 
+  set url(url) {
+    this._url = url;
+    if (!url) return;
+    this.query = querystring.parse(url.split('?')[1]);
+  }
+
+  get url() {
+    return this._url;
+  }
+
   set body(value) {
     this.rawBody = value;
   }

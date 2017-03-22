@@ -43,7 +43,7 @@ class XMLHttpRequest extends EventEmitter {
     if (this._originXhr) {
       return this._originXhr.abort();
     }
-    faked.log('XHR Abort');
+    faked.warn('XHR Abort');
   }
 
   getAllResponseHeaders() {
@@ -94,7 +94,7 @@ class XMLHttpRequest extends EventEmitter {
       return this._originSend(data);
     }
     if (this._isAsync === false) {
-      faked.log('Unable to synchronize request and has been replaced with an asynchronous request');
+      faked.warn('Unable to synchronize request and has been replaced with an asynchronous request');
     }
     if (this._mime) {
       this._res.headers.set('Content-Type', this._mime);
