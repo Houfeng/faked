@@ -33,7 +33,7 @@ faked.when('get','/user/{id}',function(){
 - `this.query` 解析查询字符串对应的对象，比如 `?name=bob` 可以通过 `this.params.name` 访问
 - `this.body` 请求的主体内容，通常会是一个 `json` 对象，它取决于发起的请求。
 
-其它方法，faked 还基于 when 方法提供了一组件便捷方法，包括
+其它方法，faked 还基于 when 方法提供了一组便捷方法，包括
 `get,post,put,delete,options,patch ...` 等常用的 Http Methods
 
 用 `faked.get` 写一个示例：
