@@ -14,6 +14,7 @@ const READY_STATES = {
 };
 
 class XMLHttpRequest extends EventEmitter {
+
   constructor(...args) {
     super(...args);
     utils.copy(READY_STATES, this);
@@ -25,6 +26,7 @@ class XMLHttpRequest extends EventEmitter {
     this.sendAsBinary = this.send;
     this.openRequest = this.open;
   }
+
   _changeReadyState(state) {
     this.readyState = state;
     let event = {};
@@ -36,12 +38,14 @@ class XMLHttpRequest extends EventEmitter {
       this.emit('load', event);
     }
   }
+
   abort() {
     if (this._originXhr) {
       return this._originXhr.abort();
     }
     faked.log('XHR Abort');
   }
+
   getAllResponseHeaders() {
     if (this._originXhr) {
       return this._originXhr.getAllResponseHeaders(name);
@@ -51,6 +55,7 @@ class XMLHttpRequest extends EventEmitter {
       return `${header.name}:${header.value}`;
     }).join('\r\n');
   }
+
   getResponseHeader(name) {
     if (this._originXhr) {
       return this._originXhr.getResponseHeader(name);
@@ -58,6 +63,7 @@ class XMLHttpRequest extends EventEmitter {
     if (!this._res) return;
     return this._res.headers.get(name);
   }
+
   open(method, url, isAsync, user, password) {
     this._openArgs = arguments;
     this._req = new Request(this._req, {
@@ -67,12 +73,14 @@ class XMLHttpRequest extends EventEmitter {
     this._isAsync = isAsync;
     this._changeReadyState(READY_STATES.OPENED);
   }
+
   overrideMimeType(mime) {
     if (this._originXhr) {
       return this._originXhr.overrideMimeType(mime);
     }
     this._mime = mime;
   }
+
   async send(data) {
     let contentType = this._req.headers.get('Content-Type');
     if (contentType == 'application/x-www-form-urlencoded') {
@@ -94,6 +102,7 @@ class XMLHttpRequest extends EventEmitter {
     this._changeReadyState(READY_STATES.LOADING);
     this._changeReadyState(READY_STATES.DONE);
   }
+
   _originSend(data) {
     this._originXhr = new OriginXMLHttpRequest();
     this._originXhr.withCredentials = this.withCredentials;
@@ -106,18 +115,21 @@ class XMLHttpRequest extends EventEmitter {
     });
     return this._originXhr.send(data);
   }
+
   setRequestHeader(name, value) {
     if (this._originXhr) {
       return this._originXhr.setRequestHeader(name, value);
     }
     this._req.headers.set(name, value);
   }
+
   get responseType() {
     if (this._originXhr) {
       return this._originXhr.responseType;
     }
     return '';
   }
+
   get responseURL() {
     if (this._originXhr) {
       return this._originXhr.responseURL;
@@ -125,6 +137,7 @@ class XMLHttpRequest extends EventEmitter {
     if (!this._res) return;
     return this._req.url;
   }
+
   get responseText() {
     if (this._originXhr) {
       return this._originXhr.responseText;
@@ -132,18 +145,21 @@ class XMLHttpRequest extends EventEmitter {
     if (utils.isString(this.response)) return this.response;
     return JSON.stringify(this.response);
   }
+
   get responseXML() {
     if (this._originXhr) {
       return this._originXhr.responseXML;
     }
     return null; //TODO: parse XML
   }
+
   get responseJSON() {
     if (this._originXhr) {
       return this._originXhr.responseJSON;
     }
     return JSON.parse(this.responseText);
   }
+
   get response() {
     if (this._originXhr) {
       return this._originXhr.response;
@@ -151,6 +167,7 @@ class XMLHttpRequest extends EventEmitter {
     if (!this._res) return;
     return this._res.body;
   }
+
   get status() {
     if (this._originXhr) {
       return this._originXhr.status;
@@ -158,6 +175,7 @@ class XMLHttpRequest extends EventEmitter {
     if (!this._res) return;
     return this._res.status;
   }
+  
   get statusText() {
     if (this._originXhr) {
       return this._originXhr.statusText;

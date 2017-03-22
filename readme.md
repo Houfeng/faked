@@ -26,6 +26,10 @@ faked.when('get','/user/{id}',function(){
   this.send({id:this.params.id,name:'Bob'});
 });
 
+//简化写法
+faked.when('get','/user/{id}', {name:'bob'});
+faked.get('/user/{id}', {name:'bob'});
+
 ```
 每一个 handler 的 this 就是当前请求上下文对象，对象有如下成员:
 - `this.send(data, status, headers)` 方法，用于响应一个请求，status 默认为 200

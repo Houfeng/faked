@@ -1,17 +1,36 @@
 const utils = require('ntils');
 
-const METHODS = ['arrayBuffer', 'blob', 'formData', 'json'];
+const METHODS = ['arrayBuffer', 'blob', 'formData'];
 
 class Body {
-  constructor(body) {
+
+  constructor(rawBody) {
     this.bodyUsed = false;
-    this.body = utils.clone(body);
+    this.rawBody = utils.clone(rawBody);
   }
+
+  get body() {
+    return this.rawBody;
+  }
+
+  set body(value) {
+    this.rawBody = value;
+  }
+
   async text() {
+    if (this.bodyUsed) throw new Error('Body Used');
     if (utils.isString(this.body)) {
-      return JSON.stringify(this.body);
+      return this.body;
     }
     return JSON.stringify(this.body);
+  }
+
+  async json() {
+    if (this.bodyUsed) throw new Error('Body Used');
+    if (utils.isString(this.body)) {
+      return JSON.parse(this.body);
+    }
+    return this.body;
   }
 }
 

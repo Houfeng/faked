@@ -10,9 +10,11 @@ const SHORT_METHDS = [
 ];
 
 class Faked {
+
   constructor() {
     this.router = new Router();
   }
+
   when(methods, pattern, handler, opts) {
     if (!utils.isArray(methods)) {
       methods = [methods];
@@ -24,6 +26,7 @@ class Faked {
       opts
     }]);
   }
+
   _findRoute(request) {
     let route = this.router.get(request.url.split('?')[0])[0];
     if (!route || route.methods.indexOf(request.method.toUpperCase()) < 0) {
@@ -32,27 +35,43 @@ class Faked {
     route.method = request.method;
     return route;
   }
+
   _invokeHandler(request, route, done) {
-    route.handler.call({
-      route: route,
-      request: request,
-      params: route.params,
-      query: querystring.parse(request.url.split('?')[1]),
-      headers: request.headers,
-      body: request.body,
-      send: (body, status, headers) => {
-        status = status || 200;
-        done(new Response(body, {
-          status,
-          headers
-        }));
-        this.log(`Responsed: "${request.url}"`);
+    let ctx = utils.create(request);
+    ctx.request = request;
+    ctx.route = route;
+    ctx.params = route.params;
+    ctx.query = querystring.parse(request.url.split('?')[1]);
+    ctx._sended = false;
+    ctx.send = (body, status, headers) => {
+      if (ctx._sended) {
+        return this.error('Send and return cannot coexist, and send cannot be repeated');
       }
-    });
+      ctx._sended = true;
+      status = status || 200;
+      done(new Response(body, {
+        status,
+        headers
+      }));
+      this.log(`Responsed: "${request.url}"`);
+    }
+    let handler = route.handler;
+    if (utils.isFunction(handler)) {
+      let result = handler.call(ctx, ctx);
+      if (!utils.isNull(result)) ctx.send(result);
+    } else {
+      ctx.send(handler);
+    }
   }
+
+  error(text) {
+    console.error(`[Faked]: %c${text}`, 'color:red;');
+  }
+
   log(text) {
     console.log(`[Faked]: %c${text}`, 'color:blue;');
   }
+
   handle(request) {
     let route = this._findRoute(request);
     if (!route) return;

@@ -1,8 +1,10 @@
 const Headers = require('./headers');
 const Body = require('./body');
 const utils = require('ntils');
+const querystring = require('querystring');
 
 class Request extends Body {
+
   constructor(url, opts) {
     opts = opts || {};
     super(opts.body);
@@ -16,17 +18,39 @@ class Request extends Body {
     this.url = this.opts.url;
     this.method = this.opts.method || 'GET';
     this.headers = new Headers(this.opts.headers);
-    this.context = this.opts.context;
-    this.referrer = this.opts.referrer;
+    this.context = this.opts.context || window;
+    this.referrer = this.opts.referrer || location.href;
     this.mode = this.opts.mode;
     this.credentials = this.opts.credentials;
     this.redirect = this.opts.redirect;
     this.integrity = this.opts.integrity;
     this.cache = this.opts.cache;
   }
+
+  //这是一个扩展属性, 不是标准 API
+  get body() {
+    let contentType = this.headers.get('Content-Type');
+    switch (contentType) {
+      case 'application/json':
+      case 'text/json':
+        return utils.isString(this.rawBody) ?
+          JSON.parse(this.rawBody) : this.rawBody;
+      case 'application/x-www-form-urlencoded':
+        return utils.isString(this.rawBody) ?
+          querystring.parse(this.rawBody) : this.rawBody;
+      default:
+        return this.rawBody;
+    }
+  }
+
+  set body(value) {
+    this.rawBody = value;
+  }
+
   clone() {
     return new Request(this.url, this.opts);
   }
+
 }
 
 module.exports = Request;

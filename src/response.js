@@ -2,6 +2,7 @@ const Headers = require('./headers');
 const Body = require('./body');
 const status = require('./status');
 
+//response 一定要保持和标准 API 一致
 class Response extends Body {
   constructor(body, opts) {
     super(body);
@@ -15,20 +16,25 @@ class Response extends Body {
     this.headers.set('X-Powered-By', 'Faked');
     this.headers.set('Cache-Control', 'max-age=0');
   }
+
   get ok() {
     return this.status >= 200 && this.status < 299;
   }
+
   get statusText() {
     return status[this.status]
   }
+
   clone() {
     return new Response(this.body, this.opts);
   }
+
   error() {
     let res = new Response(this.body, this.opts);
     res.status = 500;
     return res;
   }
+  
   redirect() {
     throw new Error('Faked does not support redirect');
   }
