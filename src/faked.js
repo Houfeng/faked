@@ -28,9 +28,10 @@ class Faked {
   }
 
   _findRoute(request) {
-    let route = this.router.get(request.url.split('?')[0])[0];
-    if (!route || route.methods.indexOf(request.method.toUpperCase()) < 0) {
-      return;
+    let matchedRoutes = this.router.get(request.url.split('?')[0]);
+    let route = matchedRoutes.find(item => item.methods.indexOf(request.method.toUpperCase()) > -1);
+    if (!route) {
+      return this.log(`Unmatched request: "${request.method} ${request.url}"`);
     }
     route.method = request.method;
     return route;
@@ -53,7 +54,7 @@ class Faked {
         status,
         headers
       }));
-      this.log(`Responsed: "${request.url}"`);
+      this.log(`Responsed: "${request.method} ${request.url}"`);
     }
     let handler = route.handler;
     if (utils.isFunction(handler)) {
@@ -75,7 +76,7 @@ class Faked {
   handle(request) {
     let route = this._findRoute(request);
     if (!route) return;
-    this.log(`Requesting: "${request.url}"`);
+    this.log(`Requesting: "${request.method} ${request.url}"`);
     return new Promise((resolve) => {
       this._invokeHandler(request, route, resolve);
     });

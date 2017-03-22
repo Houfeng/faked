@@ -4765,9 +4765,12 @@
 	  }, {
 	    key: '_findRoute',
 	    value: function _findRoute(request) {
-	      var route = this.router.get(request.url.split('?')[0])[0];
-	      if (!route || route.methods.indexOf(request.method.toUpperCase()) < 0) {
-	        return;
+	      var matchedRoutes = this.router.get(request.url.split('?')[0]);
+	      var route = matchedRoutes.find(function (item) /*istanbul ignore next*/{
+	        return item.methods.indexOf(request.method.toUpperCase()) > -1;
+	      });
+	      if (!route) {
+	        return this.log( /*istanbul ignore next*/'Unmatched request: "' + request.method + ' ' + request.url + '"');
 	      }
 	      route.method = request.method;
 	      return route;
@@ -4794,7 +4797,7 @@
 	          status: status,
 	          headers: headers
 	        }));
-	        /*istanbul ignore next*/_this.log( /*istanbul ignore next*/'Responsed: "' + request.url + '"');
+	        /*istanbul ignore next*/_this.log( /*istanbul ignore next*/'Responsed: "' + request.method + ' ' + request.url + '"');
 	      };
 	      var handler = route.handler;
 	      if (utils.isFunction(handler)) {
@@ -4821,7 +4824,7 @@
 	
 	      var route = this._findRoute(request);
 	      if (!route) return;
-	      this.log( /*istanbul ignore next*/'Requesting: "' + request.url + '"');
+	      this.log( /*istanbul ignore next*/'Requesting: "' + request.method + ' ' + request.url + '"');
 	      return new /*istanbul ignore next*/_promise2.default(function (resolve) {
 	        /*istanbul ignore next*/_this2._invokeHandler(request, route, resolve);
 	      });
