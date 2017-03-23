@@ -1,14 +1,16 @@
+![logo](./faked.png)
+
 ## 一、简介
 faked 是一个在前端开发中用于模拟服务端接口的模块。
 
 ## 二、安装 faked
 
-1. 通过 script 引入
+通过 script 引入
 ```html
 <script src="your-path/faked.min.js"></script>
 ```
 
-2. 通过 npm 安装
+通过 npm 安装
 ```sh
 $ npm i faked --save-dev
 ```
