@@ -5081,7 +5081,7 @@
 	  var keyDefs = route.pattern.match(PLACE_HOLDER_EXPR) || [];
 	  route.keys = {};
 	  //初始化 url 匹配测试表达式字符串
-	  var exprStr = '^' + utils.escapeRegExp(route.pattern) + '$';
+	  var exprStr = '^' + route.pattern + '$';
 	  utils.each(keyDefs, function (i) {
 	    //处理 key 定义
 	    var keyDef = self._parseKeyDef(keyDefs[i]);
