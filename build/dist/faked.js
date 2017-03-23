@@ -4691,25 +4691,23 @@
 	      while (1) {
 	        switch (_context.prev = _context.next) {
 	          case 0:
-	            opts = opts || {};
-	            opts['content-type'] = 'application/json';
-	            _context.next = 4;
+	            _context.next = 2;
 	            return faked.handle(new Request(req, opts));
 	
-	          case 4:
+	          case 2:
 	            response = _context.sent;
 	
 	            if (!response) {
-	              _context.next = 7;
+	              _context.next = 5;
 	              break;
 	            }
 	
 	            return _context.abrupt('return', response);
 	
-	          case 7:
+	          case 5:
 	            return _context.abrupt('return', window.originFetch(req, opts));
 	
-	          case 8:
+	          case 6:
 	          case 'end':
 	            return _context.stop();
 	        }
