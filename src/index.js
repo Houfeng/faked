@@ -1,18 +1,21 @@
+const faked = require('./faked');
+faked.Headers = require('./headers');
+faked.Request = require('./request');
+faked.Response = require('./response');
+faked.XMLHttpRequest = require('./xhr');
+faked.fetch = require('./fetch');
+faked.jsonp = require('./jsonp');
+
 window.OriginHeaders = window.Headers;
 window.OriginRequest = window.Request;
 window.OriginResponse = window.Response;
 window.originFetch = window.fetch;
 window.OriginXMLHttpRequest = window.XMLHttpRequest;
 
-window.Headers = require('./headers');
-window.Request = require('./request');
-window.Response = require('./response');
-window.fetch = require('./fetch');
-window.XMLHttpRequest = require('./xhr');
-
-const faked = require('./faked');
-const jsonp = require('./jsonp');
-
-faked.jsonp = jsonp;
+window.Headers = faked.Headers;
+window.Request = faked.Request;
+window.Response = faked.Response;
+window.fetch = faked.fetch;
+window.XMLHttpRequest = faked.XMLHttpRequest;
 
 module.exports = window.faked = faked;

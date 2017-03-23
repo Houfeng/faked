@@ -3,7 +3,8 @@ const faked = require('./faked');
 const Request = require('./request');
 
 const jsonp = {
-  paramName: 'callback'
+  param: 'callback',
+  callback: null
 };
 
 document.originCreateElement = document.createElement;
@@ -19,7 +20,8 @@ document.createElement = function (tagName) {
       return setAttribute.call(this, name, value);
     }
     let request = new Request(value);
-    let jsonpFunc = window[request.query[jsonp.paramName]];
+    let jsonpName = jsonp.callback || request.query[jsonp.param];
+    let jsonpFunc = window[jsonpName];
     (async() => {
       let response = await faked.handle(request);
       if (!response) {
