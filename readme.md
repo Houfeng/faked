@@ -25,7 +25,7 @@ const faked = require('faked');
 
 ES6 Modules 方式引用
 ```js
-import faked from 'faked'
+import * as faked from 'faked'
 ```
 
 
