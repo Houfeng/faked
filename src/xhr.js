@@ -130,6 +130,12 @@ class XMLHttpRequest extends EventEmitter {
     return '';
   }
 
+  set responseType(value) {
+    if (this._originXhr) {
+      this._originXhr.responseType = value;
+    }
+  }
+
   get responseURL() {
     if (this._originXhr) {
       return this._originXhr.responseURL;
@@ -175,7 +181,7 @@ class XMLHttpRequest extends EventEmitter {
     if (!this._res) return;
     return this._res.status;
   }
-  
+
   get statusText() {
     if (this._originXhr) {
       return this._originXhr.statusText;
