@@ -64,19 +64,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	faked.fetch = __webpack_require__(128);
 	faked.jsonp = __webpack_require__(129);
 	
-	window.OriginHeaders = window.Headers;
-	window.OriginRequest = window.Request;
-	window.OriginResponse = window.Response;
-	window.originFetch = window.fetch;
-	window.OriginXMLHttpRequest = window.XMLHttpRequest;
+	if (!window.faked) {
+	  window.OriginHeaders = window.Headers;
+	  window.OriginRequest = window.Request;
+	  window.OriginResponse = window.Response;
+	  window.originFetch = window.fetch;
+	  window.OriginXMLHttpRequest = window.XMLHttpRequest;
 	
-	window.Headers = faked.Headers;
-	window.Request = faked.Request;
-	window.Response = faked.Response;
-	window.fetch = faked.fetch;
-	window.XMLHttpRequest = faked.XMLHttpRequest;
+	  window.Headers = faked.Headers;
+	  window.Request = faked.Request;
+	  window.Response = faked.Response;
+	  window.fetch = faked.fetch;
+	  window.XMLHttpRequest = faked.XMLHttpRequest;
 	
-	module.exports = window.faked = faked;
+	  module.exports = window.faked = faked;
+	} else {
+	  module.exports = window.faked;
+	}
 
 /***/ }),
 /* 1 */
