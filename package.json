@@ -1,6 +1,6 @@
 {
   "name": "faked",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Hello Faked",
   "main": "./lib/index.js",
   "scripts": {
@@ -69,7 +69,7 @@
     "webpack": "^1.14.0"
   },
   "dependencies": {
-    "general-router": "^0.0.3",
+    "general-router": "^0.0.4",
     "ntils": "^2.0.14"
   }
 }
