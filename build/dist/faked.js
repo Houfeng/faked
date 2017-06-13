@@ -56,7 +56,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/*istanbul ignore next*/'use strict';
 	
-	if (!window.faked) {
+	if (window.faked) {
+	  module.exports = window.faked;
+	} else {
 	  var faked = __webpack_require__(1);
 	  faked.Headers = __webpack_require__(111);
 	  faked.Request = __webpack_require__(117);
@@ -65,11 +67,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  faked.fetch = __webpack_require__(128);
 	  faked.jsonp = __webpack_require__(129);
 	
-	  window.OriginHeaders = window.Headers;
-	  window.OriginRequest = window.Request;
-	  window.OriginResponse = window.Response;
-	  window.originFetch = window.fetch;
-	  window.OriginXMLHttpRequest = window.XMLHttpRequest;
+	  window.OriginHeaders = window.OriginHeaders || window.Headers;
+	  window.OriginRequest = window.OriginRequest || window.Request;
+	  window.OriginResponse = window.OriginResponse || window.Response;
+	  window.originFetch = window.originFetch || window.fetch;
+	  window.OriginXMLHttpRequest = window.OriginXMLHttpRequest || window.XMLHttpRequest;
 	
 	  window.Headers = faked.Headers;
 	  window.Request = faked.Request;
@@ -78,8 +80,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  window.XMLHttpRequest = faked.XMLHttpRequest;
 	
 	  module.exports = window.faked = faked;
-	} else {
-	  module.exports = window.faked;
 	}
 
 /***/ }),
