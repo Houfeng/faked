@@ -56,15 +56,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/*istanbul ignore next*/'use strict';
 	
-	var faked = __webpack_require__(1);
-	faked.Headers = __webpack_require__(111);
-	faked.Request = __webpack_require__(117);
-	faked.Response = __webpack_require__(78);
-	faked.XMLHttpRequest = __webpack_require__(121);
-	faked.fetch = __webpack_require__(128);
-	faked.jsonp = __webpack_require__(129);
-	
 	if (!window.faked) {
+	  var faked = __webpack_require__(1);
+	  faked.Headers = __webpack_require__(111);
+	  faked.Request = __webpack_require__(117);
+	  faked.Response = __webpack_require__(78);
+	  faked.XMLHttpRequest = __webpack_require__(121);
+	  faked.fetch = __webpack_require__(128);
+	  faked.jsonp = __webpack_require__(129);
+	
 	  window.OriginHeaders = window.Headers;
 	  window.OriginRequest = window.Request;
 	  window.OriginResponse = window.Response;
