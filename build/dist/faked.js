@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("faked", [], factory);
+	else if(typeof exports === 'object')
+		exports["faked"] = factory();
+	else
+		root["faked"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -5945,5 +5955,7 @@
 	module.exports = jsonp;
 
 /***/ })
-/******/ ]);
+/******/ ])
+});
+;
 //# sourceMappingURL=faked.js.map

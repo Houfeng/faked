@@ -50,7 +50,10 @@ module.exports = {
   },
   output: {
     path: './build/dist/',
-    filename: `./[name]${ENV === 'prod'?'.min':''}.js`
+    filename: `./[name]${ENV === 'prod' ? '.min' : ''}.js`,
+    library: pkg.name,
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   devtool: 'source-map',
   module: {
