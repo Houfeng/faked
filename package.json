@@ -1,14 +1,14 @@
 {
   "name": "faked",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Hello Faked",
-  "main": "./src/index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "start": "./bin/start.sh",
     "stop": "./bin/stop.sh",
     "restart": "./bin/restart.sh",
     "clear": "./bin/clear.sh",
-    "lint": "eslint ./lib",
+    "lint": "eslint ./src",
     "build": "./bin/build.sh",
     "watch": "./bin/watch.sh",
     "dev": "./bin/watch.sh",
@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
-    "babel-eslint": "^7.1.1",
+    "babel-eslint": "^7.2.3",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-polyfill": "^6.20.0",

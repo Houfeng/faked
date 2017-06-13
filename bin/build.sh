@@ -3,7 +3,9 @@
 set -e
 
 npm run clear 
-npm run lint
+#npm run lint
+
+babel src --out-dir lib 
 
 export NODE_ENV=dev 
 webpack --display-error-details

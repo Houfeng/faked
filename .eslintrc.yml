@@ -56,7 +56,7 @@ rules:
   no-lonely-if:
     - 2
   require-jsdoc:
-    - 2
+    - 1
     - require:
         FunctionDeclaration: true
         MethodDefinition: true

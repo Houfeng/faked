@@ -3,7 +3,7 @@
 set -e
 
 npm run clear 
-npm run lint
+#npm run lint
 
 npm run restart
 
