@@ -1,6 +1,6 @@
 {
   "name": "faked",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Hello Faked",
   "main": "./build/dist/faked.min.js",
   "scripts": {

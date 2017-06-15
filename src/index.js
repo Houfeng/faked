@@ -1,7 +1,6 @@
 const faked = require('./faked');
-const utils = require('ntils');
 
-if (utils.isNull(window)) {
+if (typeof window == 'undefined') {
   module.exports = faked;
 } else if (window.faked) {
   module.exports = window.faked;
