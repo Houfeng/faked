@@ -1,7 +1,11 @@
-if (window.faked) {
+const faked = require('./faked');
+const utils = require('ntils');
+
+if (utils.isNull(window)) {
+  module.exports = faked;
+} else if (window.faked) {
   module.exports = window.faked;
 } else {
-  const faked = require('./faked');
   faked.Headers = require('./headers');
   faked.Request = require('./request');
   faked.Response = require('./response');

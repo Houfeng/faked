@@ -56,10 +56,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/*istanbul ignore next*/'use strict';
 	
-	if (window.faked) {
+	var faked = __webpack_require__(1);
+	var utils = __webpack_require__(82);
+	
+	if (utils.isNull(window)) {
+	  module.exports = faked;
+	} else if (window.faked) {
 	  module.exports = window.faked;
 	} else {
-	  var faked = __webpack_require__(1);
 	  faked.Headers = __webpack_require__(116);
 	  faked.Request = __webpack_require__(122);
 	  faked.Response = __webpack_require__(83);
