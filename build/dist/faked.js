@@ -57,9 +57,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	/*istanbul ignore next*/'use strict';
 	
 	var faked = __webpack_require__(1);
-	var utils = __webpack_require__(82);
 	
-	if (utils.isNull(window)) {
+	if (typeof window == 'undefined') {
 	  module.exports = faked;
 	} else if (window.faked) {
 	  module.exports = window.faked;
