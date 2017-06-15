@@ -9,12 +9,15 @@ const SHORT_METHDS = [
   'lock', 'unlock', 'purge', 'propfind', 'view'
 ];
 
+const EXECABLE_STRING = /^\/\/!exec/;
+
 class Faked {
 
   constructor() {
     this.delay = 0;
     this.timeout = 5 * 1000;
     this.router = new Router();
+    this.global = {};
   }
 
   when(methods, pattern, handler, opts) {
@@ -32,7 +35,7 @@ class Faked {
   _findRoute(request) {
     let matchedRoutes = this.router.get(request.url.split('?')[0]);
     let route = matchedRoutes.
-    find(item => item.methods.indexOf(request.method.toUpperCase()) > -1);
+      find(item => item.methods.indexOf(request.method.toUpperCase()) > -1);
     if (!route) {
       return this.warn(`Unmatched request: "${request.method} ${request.url}"`);
     }
@@ -67,7 +70,7 @@ class Faked {
     }
     let handler = route.handler;
     if (utils.isFunction(handler)) {
-      let result = handler.call(ctx, ctx);
+      let result = handler.call(ctx, ctx, this.global);
       //如果 result 为 null，认为用户将要手动调用 this.send 方法
       //否则，自动调用 send，用 await 可使用户基于 Promise 完成异步操作
       if (!utils.isNull(result)) ctx.send(await result);
@@ -101,6 +104,47 @@ class Faked {
       this._invokeHandler(request, route, resolve);
     });
   }
+
+  fromJson(list) {
+    list.forEach(item => {
+      item.handler = item.handler || item.content;
+      item.pattern = item.pattern || item.url;
+      item.options = item.options || item.option;
+      item.methods = item.methods || item.method || item.type;
+      if (utils.isString(item.handler) &&
+        EXECABLE_STRING.test(item.handler)) {
+        item.handler = new Function('context', 'global', item.handler);
+      }
+      this.when(item.methods, item.pattern, item.handler, item.options);
+    });
+  }
+
+  toJson() {
+    return this.router.table.map(item => {
+      return {
+        methods: item.methods,
+        pattern: item.pattern,
+        handler: item.handler,
+        options: item.opts
+      };
+    });
+  }
+
+  applyWebpack(webpackConfig, srcFiles) {
+    if (utils.isString(webpackConfig.entry)) {
+      webpackConfig.entry = [webpackConfig.entry];
+    }
+    if (utils.isArray(webpackConfig.entry)) {
+      return webpackConfig.entry.unshift(...srcFiles);
+    }
+    utils.each(webpackConfig.entry, (name, files) => {
+      if (!utils.isArray(files)) files = [files];
+      files.unshift(...srcFiles);
+      webpackConfig.entry[name] = files;
+    });
+    return webpackConfig;
+  }
+
 }
 
 SHORT_METHDS.forEach(method => {
