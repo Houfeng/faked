@@ -28,7 +28,7 @@ class XMLHttpRequest extends EventEmitter {
 
   _changeReadyState(state) {
     this.readyState = state;
-    let event = {};
+    let event = Object.create(null);
     if (this.onreadystatechange) {
       this.onreadystatechange(event);
     }

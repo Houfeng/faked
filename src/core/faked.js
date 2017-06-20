@@ -17,7 +17,7 @@ class Faked {
     this.delay = 0;
     this.timeout = 5 * 1000;
     this.router = new Router();
-    this.global = {};
+    this.global = Object.create(null);
   }
 
   when(methods, pattern, handler, opts) {
@@ -84,19 +84,19 @@ class Faked {
   }
 
   error(...args) {
-    console.error(`[faked]:`, ...args);
+    console.error('[faked]:', ...args);
   }
 
   log(...args) {
-    console.log(`[faked]:`, ...args);
+    console.log('[faked]:', ...args);
   }
 
   warn(...args) {
-    console.warn(`[faked]:`, ...args);
+    console.warn('[faked]:', ...args);
   }
 
   info(...args) {
-    console.info(`[faked]:`, ...args);
+    console.info('[faked]:', ...args);
   }
 
   async handle(request) {
@@ -104,6 +104,7 @@ class Faked {
     if (!route) return;
     this.info(`Requesting: "${request.method} ${request.url}"`, {
       headers: request.headers.toMap(),
+      query: request.query,
       body: request.body
     });
     if (this.delay > 0) await sleep(this.delay);

@@ -20,7 +20,7 @@ const nokit = require("nokitjs");
  * 创建 server 实例
  **/
 module.exports = function (opts) {
-  opts = opts || {};
+  opts = opts || Object.create(null);
   opts.root = __dirname;
   return new nokit.Server(opts);
 };

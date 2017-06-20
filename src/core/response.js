@@ -7,7 +7,7 @@ const utils = require('ntils');
 class Response extends Body {
   constructor(body, opts) {
     super(body);
-    this.opts = opts || {};
+    this.opts = opts || Object.create(null);
     this.type = this.opts.type;
     this.url = this.opts.url;
     this.useFinalURL = this.opts.useFinalURL;

@@ -57,7 +57,7 @@ function startGui(opts) {
 
 //处理参数
 function handleOpts(opts) {
-  opts = opts || {};
+  opts = opts || Object.create(null);
   opts.port = opts.port || 5002;
   opts.console = opts.console || console;
   opts.cwd = opts.cwd || process.cwd();

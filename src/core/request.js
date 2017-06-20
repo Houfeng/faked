@@ -6,9 +6,9 @@ const querystring = require('querystring');
 class Request extends Body {
 
   constructor(url, opts) {
-    opts = opts || {};
+    opts = opts || Object.create(null);
     super(opts.body);
-    this.opts = {};
+    this.opts = Object.create(null);
     if (!utils.isString(url)) {
       utils.copy(url, this.opts);
     } else {
