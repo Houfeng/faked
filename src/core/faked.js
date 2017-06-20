@@ -83,20 +83,20 @@ class Faked {
     }
   }
 
-  error(text) {
-    console.error(`[faked]: ${text}`);
+  error(...args) {
+    console.error(`[faked]:`, ...args);
   }
 
-  log(text) {
-    console.log(`[faked]: ${text}`);
+  log(...args) {
+    console.log(`[faked]:`, ...args);
   }
 
-  warn(text) {
-    console.warn(`[faked]: ${text}`);
+  warn(...args) {
+    console.warn(`[faked]:`, ...args);
   }
 
-  info(text) {
-    console.info(`[faked]: ${text}`);
+  info(...args) {
+    console.info(`[faked]:`, ...args);
   }
 
   async handle(request) {
