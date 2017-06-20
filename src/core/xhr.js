@@ -173,10 +173,10 @@ class XMLHttpRequest extends EventEmitter {
     }
     if (!this._res) return;
     if (!this.responseType || this.responseType == 'text') {
-      return this._res.text();
+      return this._res.bodyText;
     } else if (this.responseType == 'blob' &&
       Object.prototype.toString.call(this._res.body) != '[object Blob]') {
-      return new Blob([this._res.text()]);
+      return new Blob([this._res.bodyText]);
     } else {
       return this._res.body;
     }
