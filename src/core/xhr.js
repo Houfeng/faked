@@ -174,6 +174,9 @@ class XMLHttpRequest extends EventEmitter {
     if (!this._res) return;
     if (!this.responseType || this.responseType == 'text') {
       return this._res.text();
+    } else if (this.responseType == 'blob' &&
+      Object.prototype.toString.call(b) != '[object Blob]') {
+      return new Blob([this._res.text()]);
     } else {
       return this._res.body;
     }
