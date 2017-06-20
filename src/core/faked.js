@@ -62,11 +62,15 @@ class Faked {
       }
       ctx._sended = true;
       status = status || 200;
-      done(new Response(body, {
+      let res = new Response(body, {
         status,
         headers
-      }));
-      this.info(`Responsed: "${ctx.method} ${ctx.url}"`);
+      });
+      done(res);
+      this.info(`Responsed: "${ctx.method} ${ctx.url}"`, {
+        headers: res.headers.toMap(),
+        body: body
+      });
     };
     let handler = route.handler;
     if (utils.isFunction(handler)) {
@@ -98,7 +102,10 @@ class Faked {
   async handle(request) {
     let route = this._findRoute(request);
     if (!route) return;
-    this.info(`Requesting: "${request.method} ${request.url}"`);
+    this.info(`Requesting: "${request.method} ${request.url}"`, {
+      headers: request.headers.toMap(),
+      body: request.body
+    });
     if (this.delay > 0) await sleep(this.delay);
     return new Promise((resolve) => {
       this._invokeHandler(request, route, resolve);

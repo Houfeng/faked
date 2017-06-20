@@ -53,11 +53,19 @@ class Headers {
   values() {
     return this._list.map(item => item.value);
   }
-  
+
   *entries() {
     for (let item in this._list) {
       yield [item.name, item.value];
     }
+  }
+
+  toMap() {
+    let map = {};
+    this._list.forEach(item => {
+      map[item.name] = item.value;
+    });
+    return map;
   }
 }
 
