@@ -1,16 +1,16 @@
-const faked = require('./faked');
+const faked = require('./core/faked');
 
 if (typeof window == 'undefined') {
   module.exports = faked;
 } else if (window.faked) {
   module.exports = window.faked;
 } else {
-  faked.Headers = require('./headers');
-  faked.Request = require('./request');
-  faked.Response = require('./response');
-  faked.XMLHttpRequest = require('./xhr');
-  faked.fetch = require('./fetch');
-  faked.jsonp = require('./jsonp');
+  faked.Headers = require('./core/headers'); 
+  faked.Request = require('./core/request');
+  faked.Response = require('./core/response');
+  faked.XMLHttpRequest = require('./core/xhr');
+  faked.fetch = require('./core/fetch');
+  faked.jsonp = require('./core/jsonp');
 
   window.OriginHeaders = window.OriginHeaders || window.Headers;
   window.OriginRequest = window.OriginRequest || window.Request;

@@ -1,0 +1,171 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+.app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  background-color: rgba(255, 255, 250, .9);
+  cursor: default;
+  user-select: none;
+}
+
+.side {
+  width: 300px;
+  background: rgba(235, 235, 235, .9);
+  color: #333;
+  height: 100%;
+  float: left;
+  border-right: solid 1px #ddd;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  height: calc(100% - 95px);
+  overflow: auto;
+  list-style-type: none;
+}
+
+.list-item {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid transparent;
+  vertical-align: middle;
+  color: #777;
+}
+
+.list-item:last-child {
+  border-bottom: 1px solid transparent;
+}
+
+.list-item.active {
+  background-color: rgba(250, 250, 250, .75);
+  color: #333;
+}
+
+.list-item.editing {
+  background-color: rgba(255, 255, 240, .75);
+}
+
+.list-item:hover {
+  color: #222;
+}
+
+.list-check {
+  margin-right: 10px !important;
+  vertical-align: top;
+}
+
+.list-del {
+  margin-top: 3px;
+  color: #ccc;
+}
+
+.list-del:hover {
+  color: #555;
+}
+
+.list-editing,
+.list-label {
+  display: inline-block;
+  overflow: hidden;
+  width: 140px;
+  vertical-align: top;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.editor {
+  width: calc(100% - 300px);
+  height: 100%;
+  float: right;
+  position: relative;
+}
+
+.editor textarea,
+.editor .CodeMirror {
+  width: 100%;
+  height: calc(100% - 50px);
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  font-size: 14px;
+  font-family: Courier New, Courier, monospace;
+  letter-spacing: 1px;
+  color: #555;
+}
+
+.CodeMirror-gutters {
+  background: transparent;
+}
+
+.editor .head input.url {
+  line-height: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 80%;
+  font-size: 18px;
+}
+
+.editor .head .methods {
+  display: inline-block;
+  width: 20%;
+  text-align: right;
+}
+
+.editor .head .methods select {
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  background-color: transparent;
+  outline: none;
+}
+
+.head {
+  height: 50px;
+  -webkit-app-region: drag;
+  line-height: 50px;
+  padding: 0 10px;
+  color: #999;
+  border-bottom: solid 1px #ddd;
+}
+
+::-webkit-input-placeholder {
+  color: #aaa;
+}
+
+.head .search {
+  line-height: 100%;
+  border: solid 1px #ddd;
+  width: 100%;
+  padding: 6px 15px;
+  border-radius: 15px;
+  outline: none;
+  font-size: 14px;
+  color: #555;
+}
+
+.foot {
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  color: #aaa;
+  border-top: solid 1px #ddd;
+}
+
+.foot:hover {
+  color: #555;
+}

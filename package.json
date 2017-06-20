@@ -1,27 +1,11 @@
 {
   "name": "faked",
-  "version": "0.1.8",
+  "version": "1.0.0",
   "description": "Hello Faked",
-  "main": "./build/dist/faked.min.js",
-  "scripts": {
-    "start": "./bin/start.sh",
-    "stop": "./bin/stop.sh",
-    "restart": "./bin/restart.sh",
-    "clear": "./bin/clear.sh",
-    "lint": "eslint ./src",
-    "build": "./bin/build.sh",
-    "watch": "./bin/watch.sh",
-    "dev": "./bin/watch.sh",
-    "unit": "./bin/unit.sh",
-    "e2e": "./bin/e2e.sh",
-    "test": "./bin/test.sh"
-  },
+  "main": "./dist/faked.js",
+  "scripts": {},
   "author": "",
   "license": "MIT",
-  "dev": {
-    "host": "localhost",
-    "port": 8007
-  },
   "devDependencies": {
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.2.3",
@@ -69,7 +53,12 @@
     "webpack": "^1.14.0"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "codemirror": "^5.26.0",
+    "font-awesome": "^4.7.0",
     "general-router": "^0.0.4",
+    "globby": "^6.1.0",
+    "keymaster": "^1.6.2",
     "ntils": "^2.0.14"
   }
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Faked</title>
+</head>
+
+<body>
+  <script src="../dist/faked.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.0/jquery.js"></script>
+  <script>
+    faked.when(['get', 'post'], '/', function () {
+      this.send(this.body || this.query);
+    });
+    faked.get('http://xxx.com', {
+      jsonp: 'hello'
+    });
+    console.log('原生:');
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/', true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState != 4) return;
+      console.log('原生完成', xhr.readyState, xhr.responseText);
+    };
+    xhr.send({
+      name: 'houfeng'
+    });
+    console.log(' '); //br
+    console.log('jQuery:');
+    var jqxhr = $.ajax({
+      url: '/',
+      type: 'GET', //GET
+      async: true, //或false,是否异步
+      data: {
+        name: 'yang',
+        age: 25
+      },
+      timeout: 5000, //超时时间
+      dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+      success: function (data, textStatus, jqXHR) {
+        console.log('jq完成', data, textStatus);
+      },
+      error: function (xhr, textStatus) {
+        console.log('jq错误', xhr, textStatus);
+      },
+      complete: function () {
+        console.log('jq结束');
+      }
+    });
+    jqxhr.catch(function (err) {
+      console.error('error', err);
+    });
+  </script>
+</body>
+
+</html>

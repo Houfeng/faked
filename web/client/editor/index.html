@@ -1,0 +1,16 @@
+<div class="editor">
+  <div class="head">
+    <input type="url" class="url" m:prop:disabled="item.global" m:model="item.url" />
+    <span class="pull-right methods" m:if="!item.global">
+      <select m:model="item.method">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="DELETE">DELETE</option>
+        <option value="PATCH">PATCH</option>
+        <option value="OPTION">OPTION</option>
+      </select>
+    </span>
+  </div>
+  <m:textarea m:prop:value="item.content" m:on:change="textareaChanged"></m:textarea>
+</div>

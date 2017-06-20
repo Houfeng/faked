@@ -1,0 +1,11 @@
+{
+  "handlers": {
+    "^/": "$./handlers/mvc"
+  },
+  "mvc": {
+    "routes": {
+      "get /api/data": "./api read",
+      "put /api/data": "./api save"
+    }
+  }
+}

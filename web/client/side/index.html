@@ -1,0 +1,18 @@
+<div class="side">
+  <div class="head">
+    <input class="search" type="search" m:model="keyword" placeholder="查找..." />
+  </div>
+  <ul class="list">
+    <li class="list-item {{editItem==item?'editing':''}} {{selectedItem==item?'active':''}}" m:each="item of filtratedList" m:on:dblclick="edit(item)"
+      m:on:click="select(item)" title="{{item.method}} {{item.url}}">
+      <i m:if="!item.global" class="fa fa-minus-circle pull-right list-del" aria-hidden="true" m:on:click="remove(item,$event)"></i>
+      <input type="checkbox" class="list-check" m:model="item.checked" m:prop:disabled="item.global"/>
+      <span m:if="!(editItem==item)" class="list-label">{{item.name||'...'}}</span>
+      <input m:if="editItem==item" class="list-editing" m:on:blur="edit(null)" m:on:change="edit(null)" m:model="item.name" m:focus="editItem==item"
+      />
+    </li>
+  </ul>
+  <div class="foot" m:on:click="add">
+    <i class="fa fa-plus-circle" aria-hidden="true"></i> 添加接口
+  </div>
+</div>

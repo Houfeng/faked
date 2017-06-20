@@ -1,0 +1,52 @@
+init:
+  - name: tnpm-install
+  - name: pkginfo
+
+dev:
+  - name: clean
+    target: 
+      - ./dist/**/*.*
+      - ./web/public/**/*.*
+  - name: webpack2
+    entry: ./web/client/index.js
+    template: ./web/client/assets/index.html
+    output: ./web/public/
+    common:
+      disabled: true
+    watch: true
+  - name: webpack2
+    entry: 
+      faked: ./src/index.js
+    folders:
+      js: ./
+    output: ./dist/
+    common:
+      disabled: true
+    watch: true
+
+build:
+  - name: clean
+    target: 
+      - ./dist/**/*.*
+      - ./web/public/**/*.*
+  - name: webpack2
+    entry: ./web/client/index.js
+    template: ./web/client/assets/index.html
+    output: ./web/public/
+    common:
+      disabled: true
+  - name: webpack2
+    entry: 
+      faked: ./src/index.js
+    folders:
+      js: ./
+    output: ./dist/
+    common:
+      disabled: true
+
+publish:
+  - name: shell
+    script:
+      - dn test
+      - dn build
+      - npm pu
