@@ -10,6 +10,7 @@ const SHORT_METHDS = [
 ];
 
 const EXECABLE_STRING = /^\/\/!exec/;
+const ABS_PATH_NO_PROTOCOL = /^\/\//;
 
 class Faked {
 
@@ -23,6 +24,11 @@ class Faked {
   when(methods, pattern, handler, opts) {
     if (!utils.isArray(methods)) {
       methods = [methods];
+    }
+    if (ABS_PATH_NO_PROTOCOL.test(pattern)) {
+      this.when(methods, `http:${pattern}`, handler, opts);
+      this.when(methods, `https:${pattern}`, handler, opts);
+      return;
     }
     this.router.add([{
       methods,
