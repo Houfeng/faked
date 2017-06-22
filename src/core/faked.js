@@ -28,7 +28,6 @@ class Faked {
     if (ABS_PATH_NO_PROTOCOL.test(pattern)) {
       this.when(methods, `http:${pattern}`, handler, opts);
       this.when(methods, `https:${pattern}`, handler, opts);
-      return;
     }
     this.router.add([{
       methods,
