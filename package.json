@@ -1,6 +1,6 @@
 {
   "name": "faked",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Hello Faked",
   "main": "./dist/faked.js",
   "scripts": {},
@@ -45,7 +45,6 @@
     "mokit-touch": "^1.0.1",
     "mokit-transition": "^1.0.1",
     "nokit-filter-proxy": "0.0.8",
-    "nokitjs": "^1.26.3",
     "phantomjs-prebuilt": "^2.1.13",
     "raw-loader": "^0.5.1",
     "selenium-webdriver": "^3.0.1",
@@ -57,8 +56,8 @@
     "codemirror": "^5.26.0",
     "font-awesome": "^4.7.0",
     "general-router": "^0.0.4",
-    "globby": "^6.1.0",
     "keymaster": "^1.6.2",
-    "ntils": "^2.0.14"
+    "nokitjs": "^1.26.3",
+    "ntils": "^2.1.2"
   }
 }
