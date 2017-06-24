@@ -1,10 +1,10 @@
 ![logo](./docs/faked.png)
 
-## 一、简介
+## 1. 简介
 faked 是一个在前端开发中用于 mock 服务端接口的模块，轻量简单，无需要在本地启动 Server 也无需其它更多的资源，仅在浏览器中完成「请求拉截」，配合完整的「路由系统」轻而易举的 mock 后端 API。
 
 
-## 二、安装 faked
+## 2. 安装 faked
 
 有两种可选安装方式，你可以通过传统的 `sciprt` 方式引入 faked，如果你采用了 CommonJs 或 ES6 Modules 模块方案，也可通过安装 NPM Pageage 的方式安装依赖。
 
@@ -29,7 +29,9 @@ import * as faked from 'faked'
 ```
 
 
-## 三、基本使用
+## 3. 使用 Faked
+
+### 3.1 基于用法
 
 通过 `faked.when` 方法你几乎就可以使用 faked 的所有功能了，尽管 faked 还提供了一组「快捷方法」，`faked.when` 方法说明如下：
 ```js
@@ -64,7 +66,7 @@ faked.when('get','/user/{id}', function(){
 faked.when('get','/user/{id}', {name:'bob'});
 ```
 
-## 四、快捷方法
+### 3.2 快捷方法
 faked 还基于 when 方法提供了一组快捷方法，对应常用的 Http Methods，包括：
 
 ```
@@ -80,7 +82,7 @@ faked.get('/user/{id}',function(){
 ```
 其它快捷方法和 `faked.get` 用法完全一致。
 
-## 五、路由系统
+### 3.3 路由系统
 在编辑 Mock API 时， faked 提供了路由支持，如上边看到的 `/user/{id}`，就是一个路由「匹配模式」，其中 `{id}` 是一个路由参数，当多个路由同时匹配请求的 URL 时，只会触发第一个执行，不同的 `Http Method` 的 URL 匹配模式可以相同，并不会冲突。路由参数还可以加「限定表达式」，参考如下代码：
 
 ```js
@@ -88,7 +90,7 @@ faked.get('/user/{id}',function(){
 faked.get('/user/{id:\d+}', {name:'test'});
 ```
 
-## 六、模拟网络延时
+### 3.4 模拟网络延时
 
 有时候，我们希望 Mock API 能延时响应数据，以模拟「网络延时」，faked 目前支持固定的「延时设置」，参考如下代码：
 
@@ -101,7 +103,7 @@ faked.delay = 2000;
 当 delay 设置 0 时，将禁用延时。
 
 
-## 七、设置超时时间
+### 3.5 设置超时时间
 
 faked 还可设置 Mock API 的最大响应时间，这项设置存在的意义还在于「所有 Mock API 的 Handler 默认都是异步的，如果忘记「返回或 Send」一个响应结果，请求将会被一直挂起，有了超时设置，超时时将会抛出一个错误，方便定位问题」，参考如下代码：
 
@@ -114,7 +116,7 @@ faked.timeout = 8000;
 
 超时设置和延时设置并不会相互影响，超时计算是从延时结束后开始的。
 
-## 八、JSONP 处理
+### 3.6 JSONP 处理
 
 faked 除了能 mock 常规的 `ajax` 和 `fetch` 请求，还能 mock 常常用来处理跨域问题的 `jsonp` 请求，faked 有两个参数用于配置 jsonp，参考如下代码：
 
@@ -127,18 +129,26 @@ faked.jsonp.callback = 'your-callbak-name';
 ```
 
 
-## 九、注意事项
+## 4. 在项目中使用
 
+### 4.1 注意事项
 faked 是一个「辅助开发」的工具，除非有特殊需要，一般情况下它不应出现在你的生产代码中，所以需要注意：
 
 1. 请勿将 faked 放到「生产环境」的应用或页面中  
 2. 找一个合适的你项目的方式决定什么时引用 faked 
 
+
+
+
+### 4.2. 使用示例
+
   
-比如，在 `webpak` 中，可以根据环境变量决定入口文件，并只在 `mock` 的入口文件中引用 faked，示例:
+比如，在 `webpack` 中，可以根据环境变量决定入口文件，并只在 `mock` 的入口文件中引用 faked，示例:
 
 webpack.config.js
 ```js
+const NODE_ENV = process.env.NODE_ENV;
+
 module.exports = {
   entry: {
     //根据 NODE_ENV 决定是 index.js 还是 index.mock.js
@@ -171,7 +181,48 @@ faked.get('/user/{id}',function(){
 });
 ```
 
-当然，你可以根据实际情况，安排你的文或目录结构。
+根据实际情况，安排你的文或目录结构，使用其它的工具诸如 gulp/browserify 等，都可以有类似的处理。
 
+
+### 4.3 使用 Webpack 的插件
+
+上边提到的使用方式可能稍显床烦，针对基于 webpack 进行构建的工程，faked 提供了一个插件，这是使用 faked 最简单的方式，只需要做一件事，在安装 faked 之后，修改 webpack.config.js，如下:
+
+```js
+const fakedPlugin = require('faked/plugins/webpack');
+const NODE_ENV = process.env.NODE_ENV;
+
+module.exports = {
+  entry: fakedPlugin.entry({
+    bundlue: './src/index.js'
+  },{
+    disabled: NODE_ENV=='prod', //是否禁用 faked 
+    port: 5002,                 //GUI 使用的端口，可以省略，将自动先一个可用端口
+    dir: 'faked'                // mock 文件存放目录，可以省略，默认为 faked
+  })
+  ...
+};
+```
+
+然后，像之前一样，开发或构建你的工程好就行了，比如：
+```
+NODE_ENV=mock webpack --watch
+```
+
+此时，会在终端中看到如下日志
+```sh
+faked: 检查依赖...
+faked: 加载文件...
+faked: 启动 GUI...
+faked: http://127.0.0.1:5002/
+faked: 准备就绪
+```
+
+在浏览器中访问 http://127.0.0.1:5002/ ，将会看到 faked 的图形配置界面，如下：
+
+![gui](./docs/gui.png)
+
+
+可以在 GUI 界面中完成相关 mock 配置，在 GUI 一样能进行简单的数据或逻辑的 mock。
 
 -- END --

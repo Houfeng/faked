@@ -68,6 +68,8 @@ function handleOpts(opts) {
 //定义入口
 function entries(entries, opts) {
   opts = handleOpts(opts);
+  //检查是否禁用
+  if (opts.disabled) return entries;
   //检查并创建依赖的文件
   opts.console.info('faked:', '检查依赖...');
   createFiles(opts);
