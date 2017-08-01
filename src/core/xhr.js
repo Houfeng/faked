@@ -107,6 +107,13 @@ class XMLHttpRequest extends EventEmitter {
     this._originXhr.withCredentials = this.withCredentials;
     this._originXhr.timeout = this.timeout;
     this._originXhr.open(...this._openArgs);
+
+    for (var entry of this._req.headers.entries()) {
+      if (typeof entry[0] === 'string') {
+        this.setRequestHeader(entry[0], entry[1])
+      }
+    }
+
     this._originXhr.onload = this.onload;
     this._originXhr.onreadystatechange = this.onreadystatechange;
     this._originXhr.addEventListener('load', event => {

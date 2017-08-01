@@ -9,7 +9,7 @@ class HeaderItem {
 
 class Headers {
   constructor(headers) {
-    headers = headers || Object.create(null);
+    headers = headers&&headers.toMap() || Object.create(null);
     headers['Content-Type'] = headers['Content-Type'] || 'application/json';
     this._list = [];
     utils.each(headers, (name, value) => {
@@ -55,7 +55,7 @@ class Headers {
   }
 
   *entries() {
-    for (let item in this._list) {
+    for (let item of this._list) {
       yield [item.name, item.value];
     }
   }
