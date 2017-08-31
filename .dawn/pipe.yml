@@ -1,5 +1,4 @@
 init:
-  - name: tnpm-install
   - name: pkginfo
 
 dev:
