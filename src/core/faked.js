@@ -43,7 +43,7 @@ class Faked {
       find(item => item.methods.indexOf(request.method.toUpperCase()) > -1);
     if (!route) {
       if (this.debug) {
-        this.warn(`Unmatched request: "${request.method} ${request.url}"`);
+        this.warn(`Unmatched: "${request.method} ${request.url}"`);
       }
       return;
     }
@@ -75,7 +75,7 @@ class Faked {
         headers
       });
       done(res);
-      this.info(`[res]: "${ctx.method} ${ctx.url}"`, {
+      this.info(`[Res]: "${ctx.method} ${ctx.url}"`, {
         headers: res.headers.toMap(),
         body: body
       });
@@ -110,7 +110,7 @@ class Faked {
   async handle(request) {
     let route = this._findRoute(request);
     if (!route) return;
-    this.info(`[req]: "${request.method} ${request.url}"`, {
+    this.info(`[Req]: "${request.method} ${request.url}"`, {
       headers: request.headers.toMap(),
       query: request.query,
       body: request.body
