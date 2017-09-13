@@ -9,8 +9,7 @@ class HeaderItem {
 
 class Headers {
   constructor(headers) {
-    headers = headers&&headers.toMap() || Object.create(null);
-    headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+    headers = headers && headers.toMap() || Object.create(null);
     this._list = [];
     utils.each(headers, (name, value) => {
       this.append(name, value);

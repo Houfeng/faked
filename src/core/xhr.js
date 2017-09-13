@@ -17,10 +17,6 @@ class XMLHttpRequest extends EventEmitter {
   constructor(...args) {
     super(...args);
     utils.copy(READY_STATES, this);
-    this.withCredentials = false;
-    this.timeout = 0;
-    delete this.readyState;
-    this.readyState = 0;
     this._req = new Request();
     this.sendAsBinary = this.send;
     this.openRequest = this.open;
@@ -70,7 +66,6 @@ class XMLHttpRequest extends EventEmitter {
       method
     });
     this._isAsync = isAsync;
-    this._changeReadyState(READY_STATES.OPENED);
   }
 
   overrideMimeType(mime) {
@@ -87,11 +82,12 @@ class XMLHttpRequest extends EventEmitter {
     } else {
       this._req.body = data;
     }
-    this._changeReadyState(READY_STATES.HEADERS_RECEIVED);
     this._res = await faked.handle(this._req);
     if (!this._res) {
       return this._originSend(data);
     }
+    this._changeReadyState(READY_STATES.OPENED);
+    this._changeReadyState(READY_STATES.HEADERS_RECEIVED);
     if (this._isAsync === false) {
       faked.warn('Unable to synchronize request and has been replaced with an asynchronous request');
     }
@@ -106,25 +102,23 @@ class XMLHttpRequest extends EventEmitter {
     this._originXhr = new OriginXMLHttpRequest(); //eslint-disable-line
     this._originXhr.withCredentials = this.withCredentials;
     this._originXhr.timeout = this.timeout;
-    this._originXhr.open(...this._openArgs);
-
-    for (var entry of this._req.headers.entries()) {
-      if (typeof entry[0] === 'string') {
-        this.setRequestHeader(entry[0], entry[1])
-      }
-    }
-
     this._originXhr.onload = this.onload;
     this._originXhr.onreadystatechange = this.onreadystatechange;
     this._originXhr.addEventListener('load', event => {
       this.emit('load', event);
     });
+    this._originXhr.open(...this._openArgs);
+    for (let entry of this._req.headers.entries()) {
+      if (typeof entry[0] === 'string') {
+        this.setRequestHeader(entry[0], entry[1]);
+      }
+    }
     return this._originXhr.send(data);
   }
 
   setRequestHeader(name, value) {
     if (this._originXhr) {
-      return this._originXhr.setRequestHeader(name, value);
+      this._originXhr.setRequestHeader(name, value);
     }
     this._req.headers.set(name, value);
   }
@@ -204,6 +198,51 @@ class XMLHttpRequest extends EventEmitter {
     if (!this._res) return;
     return this._res.statusText;
   }
+
+  get withCredentials() {
+    if (this._originXhr) {
+      return this._originXhr.withCredentials;
+    }
+    return this._withCredentials || 0;
+  }
+
+  set withCredentials(value) {
+    if (this._originXhr) {
+      this._originXhr.withCredentials = value;
+    }
+    this._withCredentials = value;
+  }
+
+  get timeout() {
+    if (this._originXhr) {
+      return this._originXhr.timeout;
+    }
+    return this._timeout || 0;
+  }
+
+  set timeout(value) {
+    if (this._originXhr) {
+      this._originXhr.timeout = value;
+    }
+    this._timeout = value;
+  }
+
+  get readyState() {
+    if (this._originXhr) {
+      return this._originXhr.readyState;
+    }
+    return this._readyState || 0;
+  }
+
+  set readyState(value) {
+    if (this._originXhr) {
+      this._originXhr.readyState = value;
+    }
+    this._readyState = value;
+  }
+
 }
+
+utils.copy(READY_STATES, XMLHttpRequest);
 
 module.exports = XMLHttpRequest;

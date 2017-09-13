@@ -22,7 +22,7 @@ document.createElement = function (tagName) {
     let request = new Request(value);
     let jsonpName = jsonp.callback || request.query[jsonp.param];
     let jsonpFunc = window[jsonpName];
-    (async() => {
+    (async () => {
       let response = await faked.handle(request);
       if (!response) {
         return setAttribute.call(this, name, value);

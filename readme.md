@@ -225,4 +225,24 @@ faked: 准备就绪
 
 可以在 GUI 界面中完成相关 mock 配置，在 GUI 一样能进行简单的数据或逻辑的 mock。
 
+## 开发与构建
+
+faked 使用 Dawn 进行开发与构建
+
+安装 dawn
+```sh
+npm i dawn -g
+```
+
+开发与构建
+```sh
+# 克隆代码
+git clone <git-repo> <your-path>
+
+# 开发
+dn dev
+
+#构建
+dn build
+```
 -- END --
