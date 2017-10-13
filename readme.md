@@ -31,7 +31,7 @@ import * as faked from 'faked'
 
 ## 3. 使用 Faked
 
-### 3.1 基于用法
+### 3.1 基本用法
 
 通过 `faked.when` 方法你几乎就可以使用 faked 的所有功能了，尽管 faked 还提供了一组「快捷方法」，`faked.when` 方法说明如下：
 ```js
