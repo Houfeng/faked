@@ -1,6 +1,6 @@
 {
   "name": "faked",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Hello Faked",
   "main": "./dist/faked.js",
   "scripts": {},

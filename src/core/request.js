@@ -3,6 +3,24 @@ const Body = require('./body');
 const utils = require('ntils');
 const querystring = require('querystring');
 
+function getOrigin() {
+  if (!location.origin)
+    location.origin = location.protocol + "//" + location.hostname +
+      (location.port ? ':' + location.port : '');
+  return location.origin;
+}
+
+function removeOrigin(url) {
+  if (!url) return url;
+  let origin = getOrigin();
+  if (url.indexOf(origin) != 0) return url;
+  return url.replace(origin, '');
+}
+
+function trimUrl(url) {
+  return removeOrigin(url);
+}
+
 class Request extends Body {
 
   constructor(url, opts) {
@@ -15,6 +33,7 @@ class Request extends Body {
       this.opts.url = url;
     }
     utils.copy(opts, this.opts);
+    this.opts.url = trimUrl(this.opts.url);
     this.url = this.opts.url;
     this.method = this.opts.method || 'GET';
     this.headers = new Headers(this.opts.headers);
