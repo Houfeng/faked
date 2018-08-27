@@ -75,7 +75,7 @@ class Faked {
         headers
       });
       done(res);
-      this.info(`[Res]: "${ctx.method} ${ctx.url}"`, {
+      this.info(`Response "${ctx.method} ${ctx.url}"`, {
         headers: res.headers.toMap(),
         body: body
       });
@@ -110,7 +110,7 @@ class Faked {
   async handle(request) {
     let route = this._findRoute(request);
     if (!route) return;
-    this.info(`[Req]: "${request.method} ${request.url}"`, {
+    this.info(`Request "${request.method} ${request.url}"`, {
       headers: request.headers.toMap(),
       query: request.query,
       body: request.body

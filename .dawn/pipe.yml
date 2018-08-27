@@ -5,14 +5,6 @@ dev:
   - name: clean
     target: 
       - ./dist/**/*.*
-      - ./web/public/**/*.*
-  - name: webpack
-    entry: ./web/client/index.js
-    template: ./web/client/assets/index.html
-    output: ./web/public/
-    common:
-      disabled: true
-    watch: true
   - name: webpack
     entry: 
       faked: ./src/index.js
@@ -31,13 +23,6 @@ build:
   - name: clean
     target: 
       - ./dist/**/*.*
-      - ./web/public/**/*.*
-  - name: webpack
-    entry: ./web/client/index.js
-    template: ./web/client/assets/index.html
-    output: ./web/public/
-    common:
-      disabled: true
   - name: webpack
     entry: 
       faked: ./src/index.js

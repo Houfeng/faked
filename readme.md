@@ -190,40 +190,22 @@ faked.get('/user/{id}',function(){
 
 ```js
 const fakedPlugin = require('faked/plugins/webpack');
-const NODE_ENV = process.env.NODE_ENV;
 
 module.exports = {
-  entry: fakedPlugin.entry({
-    bundlue: './src/index.js'
-  },{
-    disabled: NODE_ENV=='prod', //是否禁用 faked 
-    port: 5002,                 //GUI 使用的端口，可以省略，将自动先一个可用端口
-    dir: 'faked'                // mock 文件存放目录，可以省略，默认为 faked
-  })
+  ...
+  plugins:[
+    new fakedPlugin({root:'./src'}) // root 可省略，默认为当前目录下的 src 目录
+  ]
   ...
 };
 ```
+
+启用插件后，就可在 `root` 指定的目录中编写 `xxx.faked.js` 文件了
 
 然后，像之前一样，开发或构建你的工程好就行了，比如：
 ```
 NODE_ENV=mock webpack --watch
 ```
-
-此时，会在终端中看到如下日志
-```sh
-faked: 检查依赖...
-faked: 加载文件...
-faked: 启动 GUI...
-faked: http://127.0.0.1:5002/
-faked: 准备就绪
-```
-
-在浏览器中访问 http://127.0.0.1:5002/ ，将会看到 faked 的图形配置界面，如下：
-
-![gui](./docs/gui.png)
-
-
-可以在 GUI 界面中完成相关 mock 配置，在 GUI 一样能进行简单的数据或逻辑的 mock。
 
 ## 开发与构建
 

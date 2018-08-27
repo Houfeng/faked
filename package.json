@@ -1,27 +1,19 @@
 {
   "name": "faked",
-  "version": "1.0.17",
+  "version": "2.0.0",
   "description": "Hello Faked",
   "main": "./dist/faked.js",
   "scripts": {},
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "bootstrap": "^3.3.7",
     "cify": "^2.1.11",
-    "mokit": "^3.1.3",
-    "mokit-router": "^1.0.6",
-    "mokit-touch": "^1.0.1",
-    "mokit-transition": "^1.0.1",
-    "nokit-filter-proxy": "0.0.8"
+    "nodemon": "^1.14.12"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
-    "codemirror": "^5.26.0",
-    "font-awesome": "^4.7.0",
     "general-router": "^0.0.4",
-    "keymaster": "^1.6.2",
-    "nokitjs": "^1.26.3",
-    "ntils": "^2.1.2"
+    "ntils": "^2.1.2",
+    "stp": "^0.0.4",
+    "vmodule-webpack-plugin": "^1.0.9"
   }
 }
