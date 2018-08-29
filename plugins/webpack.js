@@ -6,8 +6,7 @@ const stp = require('stp');
 
 const scannerFile = path.resolve(__dirname, './scanner.js');
 const scannerText = fs.readFileSync(scannerFile).toString('utf8');
-const scannerTemplate = stp(scannerText.replace('//${common}', '${common}'));
-const scannerCommon = ['global.faked = require("faked")'];
+const scannerTemplate = stp(scannerText.replace('//${', '${'));
 
 function FakedPlugin(opts) {
   this.opts = Object.assign({
@@ -30,12 +29,10 @@ FakedPlugin.prototype.wrapEntries = function (entries, injectFiles) {
 };
 
 FakedPlugin.prototype.createScannerParams = function () {
-  const params = {}, commonLines = [...scannerCommon], cwd = process.cwd();
+  const params = {}, cwd = process.cwd();
   const configFile = path.resolve(cwd, this.opts.config);
-  if (fs.existsSync(configFile)) {
-    commonLines.push(fs.readFileSync(configFile).toString('utf8'));
-  }
-  params.common = commonLines.join(';');
+  if (!fs.existsSync(configFile)) fs.writeFileSync(configFile, '');
+  params.preferred = `require('${configFile}');`;
   params.root = path.resolve(cwd, this.opts.root);
   return params;
 }
