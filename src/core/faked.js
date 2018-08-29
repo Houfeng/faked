@@ -16,12 +16,14 @@ class Faked {
 
   constructor() {
     this.delay = 0;
-    this.timeout = 5 * 1000;
+    this.timeout = 10000;
     this.router = new Router();
     this.global = Object.create(null);
   }
 
   when(methods, pattern, handler, options) {
+    pattern = (pattern || '').trim();
+    if (!pattern) return;
     if (!utils.isArray(methods)) {
       methods = [methods];
     }
@@ -109,7 +111,7 @@ class Faked {
     const delay = utils.isNull(route.delay) ? this.delay : route.delay;
     if (utils.isFunction(delay)) return delay(route);
     if (utils.isNumber(delay)) return delay;
-    if (utils.isArray(delay)) return this.this.random([delay[0], delay[1]]);
+    if (utils.isArray(delay)) return this.random(delay[0], delay[1]);
     return 0;
   }
 
