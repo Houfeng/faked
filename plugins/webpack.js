@@ -48,7 +48,7 @@ FakedPlugin.prototype.apply = function (compiler) {
   const scannerModule = new VModule({
     name: scannerName,
     type: 'js',
-    handler: () => scannerTemplate(this.this.createScannerParams())
+    handler: () => scannerTemplate(this.createScannerParams())
   });
   scannerModule.apply(compiler);
   compiler.plugin('entry-option', () => {
