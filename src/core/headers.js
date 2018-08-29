@@ -42,7 +42,7 @@ class Headers {
 
   getAll(name) {
     if (!name) return this._list;
-    let items = this._list.filter(item => item.name === name);
+    const items = this._list.filter(item => item.name === name);
     return items.map(item => item.value);
   }
 
@@ -61,7 +61,7 @@ class Headers {
   }
 
   toMap() {
-    let map = Object.create(null);
+    const map = Object.create(null);
     this._list.forEach(item => {
       map[item.name] = item.value;
     });

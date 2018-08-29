@@ -32,7 +32,7 @@ class Response extends Body {
   }
 
   error() {
-    let opts = utils.clone(opts);
+    const opts = utils.clone(opts);
     opts.status = 500;
     return new Response(this.body, this.opts);
   }

@@ -5,7 +5,10 @@ const querystring = require('querystring');
 
 function getOrigin() {
   if (!location.origin)
-    location.origin = location.protocol + "//" + location.hostname +
+    location.origin =
+      location.protocol +
+      '//' +
+      location.hostname +
       (location.port ? ':' + location.port : '');
   return location.origin;
 }
@@ -22,7 +25,6 @@ function trimUrl(url) {
 }
 
 class Request extends Body {
-
   constructor(url, opts) {
     opts = opts || Object.create(null);
     super(opts.body);
@@ -48,15 +50,17 @@ class Request extends Body {
 
   //这是一个扩展属性, 不是标准 API
   get body() {
-    let contentType = this.headers.get('Content-Type');
+    const contentType = this.headers.get('Content-Type');
     switch (contentType) {
       case 'application/json':
       case 'text/json':
-        return utils.isString(this.rawBody) ?
-          JSON.parse(this.rawBody) : this.rawBody;
+        return utils.isString(this.rawBody)
+          ? JSON.parse(this.rawBody)
+          : this.rawBody;
       case 'application/x-www-form-urlencoded':
-        return utils.isString(this.rawBody) ?
-          querystring.parse(this.rawBody) : this.rawBody;
+        return utils.isString(this.rawBody)
+          ? querystring.parse(this.rawBody)
+          : this.rawBody;
       default:
         return this.rawBody;
     }
@@ -79,7 +83,6 @@ class Request extends Body {
   clone() {
     return new Request(this.url, this.opts);
   }
-
 }
 
 module.exports = Request;

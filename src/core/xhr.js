@@ -5,11 +5,7 @@ const querystring = require('querystring');
 const EventEmitter = require('events');
 
 const READY_STATES = {
-  UNSENT: 0,
-  OPENED: 1,
-  HEADERS_RECEIVED: 2,
-  LOADING: 3,
-  DONE: 4
+  UNSENT: 0, OPENED: 1, HEADERS_RECEIVED: 2, LOADING: 3, DONE: 4
 };
 
 class XMLHttpRequest extends EventEmitter {
@@ -24,7 +20,7 @@ class XMLHttpRequest extends EventEmitter {
 
   _changeReadyState(state) {
     this.readyState = state;
-    let event = Object.create(null);
+    const event = Object.create(null);
     if (this.onreadystatechange) {
       this.onreadystatechange(event);
     }
@@ -59,7 +55,8 @@ class XMLHttpRequest extends EventEmitter {
     return this._res.headers.get(name);
   }
 
-  open(method, url, isAsync, user, password) { //eslint-disable-line
+  //eslint-disable-next-line
+  open(method, url, isAsync, user, password) {
     this._openArgs = arguments;
     this._req = new Request(this._req, {
       url,
@@ -76,7 +73,7 @@ class XMLHttpRequest extends EventEmitter {
   }
 
   async send(data) {
-    let contentType = this._req.headers.get('Content-Type');
+    const contentType = this._req.headers.get('Content-Type');
     if (contentType == 'application/x-www-form-urlencoded') {
       this._req.body = querystring.parse(data);
     } else {
@@ -89,7 +86,9 @@ class XMLHttpRequest extends EventEmitter {
     this._changeReadyState(READY_STATES.OPENED);
     this._changeReadyState(READY_STATES.HEADERS_RECEIVED);
     if (this._isAsync === false) {
-      faked.warn('Unable to synchronize request and has been replaced with an asynchronous request');
+      faked.warn(
+        'Unable to synchronize request and has been replaced with an asynchronous request'
+      );
     }
     if (this._mime) {
       this._res.headers.set('Content-Type', this._mime);
@@ -141,7 +140,7 @@ class XMLHttpRequest extends EventEmitter {
     if (this._originXhr) {
       return this._originXhr.responseURL;
     }
-    if (!this._res) return;
+    if (!this._res) return null;
     return this._req.url;
   }
 
@@ -172,11 +171,13 @@ class XMLHttpRequest extends EventEmitter {
     if (this._originXhr) {
       return this._originXhr.response;
     }
-    if (!this._res) return;
+    if (!this._res) return null;
     if (!this.responseType || this.responseType == 'text') {
       return this._res.bodyText;
-    } else if (this.responseType == 'blob' &&
-      Object.prototype.toString.call(this._res.body) != '[object Blob]') {
+    } else if (
+      this.responseType == 'blob' &&
+      Object.prototype.toString.call(this._res.body) != '[object Blob]'
+    ) {
       return new Blob([this._res.bodyText]);
     } else {
       return this._res.body;
@@ -187,7 +188,7 @@ class XMLHttpRequest extends EventEmitter {
     if (this._originXhr) {
       return this._originXhr.status;
     }
-    if (!this._res) return;
+    if (!this._res) return null;
     return this._res.status;
   }
 
@@ -195,7 +196,7 @@ class XMLHttpRequest extends EventEmitter {
     if (this._originXhr) {
       return this._originXhr.statusText;
     }
-    if (!this._res) return;
+    if (!this._res) return null;
     return this._res.statusText;
   }
 
@@ -240,7 +241,6 @@ class XMLHttpRequest extends EventEmitter {
     }
     this._readyState = value;
   }
-
 }
 
 utils.copy(READY_STATES, XMLHttpRequest);
