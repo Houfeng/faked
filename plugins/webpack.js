@@ -32,7 +32,7 @@ FakedPlugin.prototype.createScannerParams = function () {
   const params = {}, cwd = process.cwd();
   const configFile = path.resolve(cwd, this.opts.config);
   if (!fs.existsSync(configFile)) fs.writeFileSync(configFile, '');
-  params.preferred = `require('${configFile}');`;
+  params.preferred = `require('${configFile.replace(/\\/g, '\\\\')}');`;
   params.root = path.resolve(cwd, this.opts.root);
   return params;
 }
