@@ -67,6 +67,10 @@ class Headers {
     });
     return map;
   }
+  
+  forEach(fn, thisArg) {
+    this._list.forEach(fn, thisArg);
+  }
 }
 
 module.exports = Headers;
