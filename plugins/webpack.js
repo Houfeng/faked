@@ -33,7 +33,7 @@ FakedPlugin.prototype.createScannerParams = function () {
   const configFile = path.resolve(cwd, this.opts.config);
   if (!fs.existsSync(configFile)) fs.writeFileSync(configFile, '');
   params.preferred = `require('${configFile.replace(/\\/g, '\\\\')}');`;
-  params.root = path.resolve(cwd, this.opts.root);
+  params.root = path.resolve(cwd, this.opts.root).replace(/\\/g, '\\\\');
   return params;
 }
 
