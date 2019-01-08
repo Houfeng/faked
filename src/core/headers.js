@@ -69,7 +69,7 @@ class Headers {
   }
   
   forEach(fn, thisArg) {
-    this._list.forEach(item => fn.call(thisArg || this, item.value, item.key));
+    this._list.forEach(item => fn.call(thisArg || this, item.value, item.name));
   }
 }
 
