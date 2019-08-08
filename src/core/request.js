@@ -50,7 +50,8 @@ class Request extends Body {
 
   //这是一个扩展属性, 不是标准 API
   get body() {
-    const contentType = this.headers.get('Content-Type');
+    const contentType = (this.headers.get('Content-Type') || '')
+      .split(';')[0];
     switch (contentType) {
       case 'application/json':
       case 'text/json':

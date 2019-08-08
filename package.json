@@ -1,6 +1,6 @@
 {
   "name": "faked",
-  "version": "2.0.9",
+  "version": "2.1.0",
   "description": "Hello Faked",
   "main": "./dist/faked.js",
   "scripts": {},
@@ -8,6 +8,10 @@
   "license": "MIT",
   "devDependencies": {
     "cify": "^2.1.11",
+    "dn-middleware-clean": "^1.0.2",
+    "dn-middleware-lint": "^2.1.4",
+    "dn-middleware-shell": "^1.1.0",
+    "dn-middleware-webpack": "^1.11.5",
     "nodemon": "^1.14.12"
   },
   "dependencies": {
